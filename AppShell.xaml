@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Naidis_App.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Naidis_App"
+    Shell.FlyoutBehavior="Disabled"
+    Title="Naidis_App">
+
+    <Shell.TitleView>
+        <Label
+            Text="Näidis"
+            FontFamily="OpenSans-Regular"
+            FontSize="Title"
+            TextColor="DarkGoldenrod"
+            VerticalTextAlignment="Center"
+            VerticalOptions="Center"
+            HorizontalOptions="Start"
+            Padding="25,0,0,0"
+            HeightRequest="50" />
+    </Shell.TitleView>
+
+        <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:StartPage}"
+        Route="StartPage" />
+
+</Shell>
