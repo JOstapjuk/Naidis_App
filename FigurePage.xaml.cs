@@ -54,7 +54,7 @@ public partial class FigurePage : ContentPage
 
         VerticalStackLayout vsl = new VerticalStackLayout
         {
-            Children = { bw, hsl },
+            Children = { bw, hsl, clickLabel },
             VerticalOptions = LayoutOptions.CenterAndExpand,
             HorizontalOptions = LayoutOptions.Center
         };
@@ -90,5 +90,8 @@ public partial class FigurePage : ContentPage
             bw.HeightRequest = 200;
             bw.WidthRequest = 200;
         }
+
+        int klikid = int.Parse(clickLabel.Text.Split(' ')[1]) + 1;
+        clickLabel.Text = $"Klikid: {klikid}";
     }
 }
