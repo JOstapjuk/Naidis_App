@@ -36,7 +36,7 @@ public partial class Valgusfoor : ContentPage
         var turnOffButton = new Button { Text = "Välja" };
         turnOffButton.Clicked += (s, e) => ToggleTrafficLight(false);
 
-        var autoCycleButton = new Button { Text = "Automaatne režiim" };
+        var autoCycleButton = new Button { Text = "Automaatne reziim" };
         autoCycleButton.Clicked += (s, e) => StartTrafficLightCycle();
 
         redLight.GestureRecognizers.Add(CreateTapGestureRecognizer("Punane"));
@@ -109,10 +109,17 @@ public partial class Valgusfoor : ContentPage
             statusLabel.Text = "Stopp!";
             await Task.Delay(3000);
 
-            redLight.Color = Colors.Gray;
-            yellowLight.Color = Colors.Yellow;
-            statusLabel.Text = "Ole valmis!";
-            await Task.Delay(2000);
+            for (int i = 0; i < 3; i++)
+            {
+                redLight.Color = Colors.Gray;
+                yellowLight.Color = Colors.Yellow;
+                statusLabel.Text = "Ole valmis!";
+                await Task.Delay(500);
+
+                redLight.Color = Colors.Gray;
+                yellowLight.Color = Colors.Gray;
+                await Task.Delay(500);
+            }
 
             yellowLight.Color = Colors.Gray;
             greenLight.Color = Colors.Green;
