@@ -6,14 +6,20 @@ public partial class StartPage : ContentPage
     {
         new TextPage(0),
         new FigurePage(1),
-        new Valgusfoor()
+        new Valgusfoor(),
+        new DateTime_Page(2), 
+        new StepperSliderPage(),
+        new ColorStepper()
     };
 
     public List<string> tekstid = new List<string>
     {
         "Tee lahti TextPage",
         "Tee lahti FigurePage",
-        "Tee lahti Valgusfoor"
+        "Tee lahti Valgusfoor",
+        "Tee lahti DateTime_Page",
+        "Tee lahti StepperSliderPage",
+        "Tee lahti ColorStepper"
     };
 
     ScrollView sv;
