@@ -7,9 +7,10 @@ public partial class StartPage : ContentPage
         new TextPage(0),
         new FigurePage(1),
         new Valgusfoor(),
-        new DateTime_Page(2), 
+        new DateTime_Page(2),
         new StepperSliderPage(),
-        new ColorStepper()
+        new ColorStepper(),
+        new Lumememm()
     };
 
     public List<string> tekstid = new List<string>
@@ -19,7 +20,8 @@ public partial class StartPage : ContentPage
         "Tee lahti Valgusfoor",
         "Tee lahti DateTime_Page",
         "Tee lahti StepperSliderPage",
-        "Tee lahti ColorStepper"
+        "Tee lahti ColorStepper",
+        "Tee lahti Lumemmem"
     };
 
     ScrollView sv;
