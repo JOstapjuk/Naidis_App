@@ -1,4 +1,5 @@
 using Microsoft.Maui.Layouts;
+using Microsoft.Maui.Graphics;
 
 namespace Naidis_App;
 
@@ -8,95 +9,114 @@ public partial class Lumememm : ContentPage
     private BoxView body;
     private BoxView head;
     private Label statusLabelControl;
-    private AbsoluteLayout abs;
-    private Button HideBtn;
-    private Button ShowBtn;
-    private Button RandomBtn;
-    private Button MeltBtn;
-    private Button RotateBtn;
+    private AbsoluteLayout snowmanLayout;
 
     public Lumememm()
 	{
-        bucket = new BoxView { WidthRequest = 150, HeightRequest = 150, BackgroundColor = Colors.Gold };
-        AbsoluteLayout.SetLayoutBounds(bucket, new Rect(0.5, 0.8, 0.2, 0.15));
-        AbsoluteLayout.SetLayoutFlags(bucket, AbsoluteLayoutFlags.PositionProportional);
+        Title = "lumemem";
 
-        body = new BoxView { WidthRequest = 150, HeightRequest = 150, BackgroundColor = Colors.White, CornerRadius = 10 };
-        AbsoluteLayout.SetLayoutBounds(body, new Rect(0.5, 0.5, 0.3, 0.3));
-        AbsoluteLayout.SetLayoutFlags(body, AbsoluteLayoutFlags.PositionProportional);
+        snowmanLayout = new AbsoluteLayout
+        {
+            HeightRequest = 400,
+            WidthRequest = 300,
+            BackgroundColor = Colors.SkyBlue
+        };
 
-        head = new BoxView { WidthRequest = 150, HeightRequest = 150, BackgroundColor = Colors.White, CornerRadius = 10 };
-        AbsoluteLayout.SetLayoutBounds(head, new Rect(0.5, 0.3, 0.25, 0.25));
-        AbsoluteLayout.SetLayoutFlags(head, AbsoluteLayoutFlags.PositionProportional);
+        bucket = new BoxView { Color = Colors.Gold, WidthRequest = 60, HeightRequest = 60, BackgroundColor = Colors.Transparent };
+        body = new BoxView { Color = Colors.White, CornerRadius = 50, WidthRequest = 90, HeightRequest = 90, BackgroundColor = Colors.Transparent };
+        head = new BoxView { Color = Colors.White, CornerRadius = 50, WidthRequest = 75, HeightRequest = 75 , BackgroundColor = Colors.Transparent };
 
-        HideBtn = new Button { Text = "Hide snowman", FontSize = 14, HorizontalOptions = LayoutOptions.Fill, BackgroundColor = Colors.Purple, TextColor = Colors.White };
-        HideBtn.Clicked += HideSnowman_Clicked;
+        AbsoluteLayout.SetLayoutBounds(bucket, new Rect(135, 90, 60, 60));
+        AbsoluteLayout.SetLayoutFlags(bucket, AbsoluteLayoutFlags.None);
+
+        AbsoluteLayout.SetLayoutBounds(head, new Rect(125, 150, 75, 75));
+        AbsoluteLayout.SetLayoutFlags(head, AbsoluteLayoutFlags.None);
+
+        AbsoluteLayout.SetLayoutBounds(body, new Rect(110, 220, 100, 100));
+        AbsoluteLayout.SetLayoutFlags(body, AbsoluteLayoutFlags.None);
 
 
-        ShowBtn = new Button { Text = "Show snowman", FontSize = 14, HorizontalOptions = LayoutOptions.Fill, BackgroundColor = Colors.Purple, TextColor = Colors.White };
-        ShowBtn.Clicked += ShowSnowman_Clicked;
+        snowmanLayout.Add(bucket);
+        snowmanLayout.Add(body);
+        snowmanLayout.Add(head);
 
-        RandomBtn = new Button { Text = "Random colors snowman", FontSize = 14, HorizontalOptions = LayoutOptions.Fill, BackgroundColor = Colors.Purple, TextColor = Colors.White };
-        RandomBtn.Clicked += RandomColor_Clicked;
+        bucket.Opacity = 1;
+        body.Opacity = 1;
+        head.Opacity = 1;
 
-        MeltBtn = new Button { Text = "Melt snowman", FontSize = 14, HorizontalOptions = LayoutOptions.Fill, BackgroundColor = Colors.Purple, TextColor = Colors.White };
-        MeltBtn.Clicked += MeltSnowman_Clicked;
+        Button hideButton = new Button { Text = "Peida" };
+        hideButton.Clicked += HideSnowman_Clicked;
 
-        RotateBtn = new Button { Text = "Rotate snowman", FontSize = 14, HorizontalOptions = LayoutOptions.Fill, BackgroundColor = Colors.Purple, TextColor = Colors.White };
-        RotateBtn.Clicked += RotateSnowman_Clicked;
+        Button showButton = new Button { Text = "Näita" };
+        showButton.Clicked += ShowSnowman_Clicked;
 
-        abs.Children.Add(bucket);
-        abs.Children.Add(body);
-        abs.Children.Add(head);
-        abs.Children.Add(ShowBtn);
-        abs.Children.Add(HideBtn);
-        abs.Children.Add(RandomBtn);
-        abs.Children.Add(MeltBtn);
-        abs.Children.Add(RotateBtn);
+        Button randomColorButton = new Button { Text = "Värvi juhusliku värviga" };
+        randomColorButton.Clicked += RandomColor_Clicked;
 
-        Content = abs;
+        Button meltButton = new Button { Text = "Sulata" };
+        meltButton.Clicked += MeltSnowman_Clicked;
+
+        Button rotateButton = new Button { Text = "Pööramine" };
+        rotateButton.Clicked += RotateSnowman_Clicked;
+
+        statusLabelControl = new Label { Text = "Staatus: aktiivne", FontSize = 14 };
+
+        StackLayout stackLayout = new StackLayout
+        {
+            Padding = 20,
+            Children = { snowmanLayout, hideButton, showButton, randomColorButton, meltButton, rotateButton, statusLabelControl }
+        };
+
+        Content = stackLayout;
     }
 
     private async void HideSnowman_Clicked(object sender, EventArgs e)
     {
-        await bucket.FadeTo(0, 500);
-        await body.FadeTo(0, 500);
-        await head.FadeTo(0, 500);
-        statusLabelControl.Text = "status: hidden";
+        await Task.WhenAll(bucket.FadeTo(0, 500), body.FadeTo(0, 500), head.FadeTo(0, 500));
+        statusLabelControl.Text = "Staatus: peidetud";
     }
 
     private async void ShowSnowman_Clicked(object sender, EventArgs e)
     {
-        await bucket.FadeTo(1, 500);
-        await body.FadeTo(1, 500);
-        await head.FadeTo(1, 500);
-        statusLabelControl.Text = "status: shown";
+        await Task.WhenAll(bucket.FadeTo(1, 500), body.FadeTo(1, 500), head.FadeTo(1, 500));
+
+        await Task.WhenAll(
+            bucket.TranslateTo(0, 0, 500),
+            body.TranslateTo(0, 0, 500),
+            head.TranslateTo(0, 0, 500)
+        );
+
+        bucket.Rotation = 0;
+        body.Rotation = 0;
+        head.Rotation = 0;
+
+        bucket.Color = Colors.Gold;
+        body.Color = Colors.White;
+        head.Color = Colors.White;
+
+        statusLabelControl.Text = "Staatus: näidatud";
     }
 
     private async void RandomColor_Clicked(object sender, EventArgs e)
     {
         Random random = new Random();
-        await Task.Delay(200);
-
         int r = random.Next(0, 256);
         int g = random.Next(0, 256);
         int b = random.Next(0, 256);
 
-        bool vastus = await DisplayAlert("Värvi muutus",
-            $"Kas tahad värvi muuta? Uued värvi väärtused punane: {r} roheline: {g} sinine: {b}",
-            "Jah", "Ei");
+        bool answer = await DisplayAlert("Värvi muutus", $"Kas tahad värvi muuta? Uued värvi väärtused: R: {r}, G: {g}, B: {b}", "Jah", "Ei");
 
-        if (vastus)
+        if (answer)
         {
             Color newColor = Color.FromRgb(r, g, b);
             bucket.Color = newColor;
             body.Color = newColor;
             head.Color = newColor;
-            statusLabelControl.Text = "status: random colors";
+            statusLabelControl.Text = "Staatus: Muudetud värvus";
         }
         else
         {
-            bucket.Color = Colors.Goldenrod;
+            bucket.Color = Colors.Gold;
             body.Color = Colors.White;
             head.Color = Colors.White;
         }
@@ -109,7 +129,7 @@ public partial class Lumememm : ContentPage
             body.TranslateTo(0, 100, 1000, Easing.SinIn),
             head.TranslateTo(0, 100, 1000, Easing.SinIn)
         );
-        statusLabelControl.Text = "status: melted";
+        statusLabelControl.Text = "Staatus: sulanud";
     }
 
     private async void RotateSnowman_Clicked(object sender, EventArgs e)
@@ -119,6 +139,6 @@ public partial class Lumememm : ContentPage
             body.RotateTo(360, 1000),
             head.RotateTo(360, 1000)
         );
-        statusLabelControl.Text = "status: rotated";
+        statusLabelControl.Text = "Staatus: rotatsioon";
     }
 }
