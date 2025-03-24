@@ -12,7 +12,9 @@ public partial class StartPage : ContentPage
         new ColorStepper(),
         new Lumememm(),
         new PickerImagePage(),
-        new Table_Page()
+        new Table_Page(),
+        new List_Page(),
+        new Riik_List()
     };
 
     public List<string> tekstid = new List<string>
@@ -25,7 +27,9 @@ public partial class StartPage : ContentPage
         "Tee lahti ColorStepper",
         "Tee lahti Lumemmem",
         "Tee lahti PickerImagePage",
-        "Tee lahti Table Page"
+        "Tee lahti Table Page",
+        "Tee lahti List Page",
+        "Tee lahti Riigi Page"
     };
 
     ScrollView sv;
