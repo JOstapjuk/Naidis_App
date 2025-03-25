@@ -18,6 +18,17 @@ public partial class RiigiDetailPage : ContentPage
         Label rahvaarvLabel = new Label { Text = "Rahvaarv:" };
         rahvaarvEntry = new Entry { Text = riik.Rahvaarv.ToString(), Keyboard = Keyboard.Numeric };
 
+        Button changeFlagButton = new Button { Text = "Muuda lipp" };
+        changeFlagButton.Clicked += async (sender, args) =>
+        {
+            var result = await FilePicker.PickAsync();
+            if (result != null)
+            {
+                _riik.Lipp = result.FullPath; 
+                lipp.Source = ImageSource.FromFile(result.FullPath);
+            }
+        };
+
         Button updateButton = new Button { Text = "Uuenda" };
         updateButton.Clicked += UpdateRiik;
 
@@ -27,7 +38,7 @@ public partial class RiigiDetailPage : ContentPage
         Content = new StackLayout
         {
             Padding = 20,
-            Children = { lipp, pealinnLabel, pealinnEntry, rahvaarvLabel, rahvaarvEntry, updateButton, tagasiNupp }
+            Children = { lipp, pealinnLabel, pealinnEntry, rahvaarvLabel, rahvaarvEntry, changeFlagButton, updateButton, tagasiNupp }
         };
     }
 

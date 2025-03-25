@@ -60,7 +60,6 @@ public partial class Riik_List : ContentPage
         string uusRiik = await DisplayPromptAsync("Lisa riik", "Sisesta riigi nimi:");
         if (!string.IsNullOrEmpty(uusRiik) && !Riigid.Any(r => r.Nimi.ToLower() == uusRiik.ToLower()))
         {
-            // Add the new country to the ObservableCollection
             Riigid.Add(new Riik { Nimi = uusRiik, Pealinn = "?", Rahvaarv = 0, Lipp = "default_flag.png" });
         }
         else
@@ -74,7 +73,7 @@ public partial class Riik_List : ContentPage
         if (riikideListView.SelectedItem != null)
         {
             Riik valitudRiik = (Riik)riikideListView.SelectedItem;
-            Riigid.Remove(valitudRiik);  // ObservableCollection automatically updates the UI
+            Riigid.Remove(valitudRiik);
         }
     }
 
